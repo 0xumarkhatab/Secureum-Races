@@ -3,6 +3,11 @@
 This repository will contain my results of different Secureum Races for the record
 <br/> and write-ups for newbies ( thinking if something is unclear for me, might be for others too)
 
+## Race #6
+
+![Screenshot from 2023-06-23 16-18-14](https://github.com/umaresso/Secureum-Races/assets/71306738/1c2d4f03-5dd7-4c2a-a3ee-8034a1b493be)
+
+
 ## Race #5
 
 ## Scored 7.66 / 8 = 95%
