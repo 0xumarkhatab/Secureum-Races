@@ -3,6 +3,10 @@
 This repository will contain my results of different Secureum Races for the record
 <br/> and write-ups for newbies ( thinking if something is unclear for me, might be for others too)
 
+## Race #8
+![Screenshot-33](https://github.com/umaresso/Secureum-Races/assets/71306738/ed403eab-3383-452e-9a68-6f7eac7fa6a7)
+
+
 ## Race #7
 
 ![Screenshot-29](https://github.com/umaresso/Secureum-Races/assets/71306738/2806e4aa-049f-44ec-b842-ce8016cbddea)
