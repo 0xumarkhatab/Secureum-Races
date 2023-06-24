@@ -3,6 +3,16 @@
 This repository will contain my results of different Secureum Races for the record
 <br/> and write-ups for newbies ( thinking if something is unclear for me, might be for others too)
 
+## Race #10
+This time, I came across an abstract Contract (in the sense that its functionality was not clear beforehand). <br/>
+I had to infer certain flow patterns and vulnerabilities that are not common in the space ( or new to me ).
+
+Was able to score sufficiently but i need to level up my game !
+
+
+![Screenshot-48](https://github.com/umaresso/Secureum-Races/assets/71306738/c2cdc36c-24f7-418b-9282-3841a6773e3a)
+
+
 ## Race #9
 So , in Race #9 , i came across Proxy Patterns.
 This is something I knew I need to dig deeper .
