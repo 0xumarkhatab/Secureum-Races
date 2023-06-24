@@ -3,6 +3,17 @@
 This repository will contain my results of different Secureum Races for the record
 <br/> and write-ups for newbies ( thinking if something is unclear for me, might be for others too)
 
+## Race #9
+So , in Race #9 , i came across Proxy Patterns.
+This is something I knew I need to dig deeper .
+Studied stuff , came back , solved some questions but I was not able to get a high score !
+
+Score : 3.66 / 8
+
+I need to focus on Proxy contracts : /
+![Screenshot from 2023-06-24 07-17-00](https://github.com/umaresso/Secureum-Races/assets/71306738/28fae481-9065-4c6d-9cf3-7fb16628ebf3)
+
+
 ## Race #8
 ![Screenshot-33](https://github.com/umaresso/Secureum-Races/assets/71306738/ed403eab-3383-452e-9a68-6f7eac7fa6a7)
 
