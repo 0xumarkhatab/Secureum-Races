@@ -3,6 +3,200 @@
 This repository will contain my results of different Secureum Races for the record
 <br/> and write-ups for newbies ( thinking if something is unclear for me, might be for others too)
 
+## Race # 11
+Scored 5.7 .
+Lost some marks to learn something new !
+
+##
+![Screenshot-50](https://github.com/umaresso/Secureum-Races/assets/71306738/7f8f5a27-3284-43a2-9146-2df927f290f6)
+
+## Write-up
+
+
+
+Race Link : https://ventral.digital/posts/2022/10/31/race-11-of-the-secureum-bootcamp-epoch
+
+Code Review :
+
+1. using solidity compiler 0.8.x so we don't have integer over.underflow by default unless it occurs in unchecked
+
+
+
+2. So there seems an access controlled time lock deposit and withdrawl system by seeing these state variables 
+
+```solidity
+
+	bool internal _paused;
+	address internal _operator;
+	address internal _governance;
+	address internal _token;
+	uint256 internal _minDepositLockTime;
+   
+   ```
+   
+3. No zero address check and uint threshhold check in the constructor 
+
+```solidity
+
+   constructor(address operator, address governance, address token, uint256 minDepositLockTime) {
+       _operator = operator;
+       _governance = governance;
+       _token = token;
+       _minDepositLockTime = minDepositLockTime;
+   }
+
+```
+
+4. So anyone can call `depositFor` to fund other people's account .
+
+
+```soliidty
+
+function depositFor(address user, uint256 amount) external 
+
+```
+
+5. There's an issue with the typecasting here .
+
+
+```solidity
+
+ IERC20(_token).safeTransferFrom(user, address(this), amount);
+ 
+```
+
+This is what i asked in Secureum Discord 
+
+
+```
+Hi @Rajeev | Secureum , the safeERC20 does not have a function safeTransferFrom which accepts following params user,receiver,amount rather it expects IERC20 token,user,receiver,amount.
+In Race 11 , safeERC20 is used for IERC20 .
+
+Then in depositFor , we have IERC20(_token).safeTransferFrom(user,receiver, amount).
+
+First of all safeTransferFrom in safeERC20 is internal. secondly, it involves another parameter _token.
+The expected parameters are 4 but 3 are given. 
+
+Can you help me understand if this is a mistake at your end or my understanding ?
+
+Thank you !
+
+```
+
+Till we get the answer , let's it over.
+
+
+6. The event is misleading or unclear.
+
+```soliidty
+
+ emit Deposit(msg.sender, amount);
+
+```
+
+the event definition says :
+
+```solidity
+
+
+   event Deposit(
+       address indexed user,
+       uint256 amount
+   );
+
+```
+
+who is the user ?
+as anyone can deposit funds for anyone . so it is unclear who is the user here ?
+The depositor (msg.sender ) ?
+or the person who's account is funded (user) ?
+
+
+### Withdraw Function
+
+
+7. the contract should check for and maintain the last Withdraw time and min withdraw time limit instead of desposit.
+
+```solidity
+
+   function withdraw(uint256 amount) external {
+       require(!_paused, 'paused');
+       require(block.timestamp >= _userLastDeposit[msg.sender] + _minDepositLockTime, 'too early');
+       
+
+```
+ 
+ because in this way , user can repeatedly withdraw if certain deposit time limit has been passed .
+ 
+ 
+8. Same vulnerbaility as of point 5.
+
+```solidity
+
+IERC20(_token).safeTransferFrom(address(this), msg.sender, amount);
+
+
+```
+
+9. Re-entrancy : Although it is unclear for now but if `safeTransferFrom` calls some type of callback on the receiver of the tokens , and the receiver has some kind of malicious logic in the fallback function then the attacker contract can re-enter the contract because there are not Check-Effect-Interaction scheme implemented .
+
+i.e check  		: determine if user has enough funds
+    effect 		: increase or decrease user balance that prevents re-entrancy
+    interaction		: send the call to the user/contract account
+    
+10. User can withdraw arbitrariy amount of tokens , greater than they might have deposited.
+
+
+### Pause
+
+11. Anyone who has a both operator and governance role , can pause the withdraw:
+
+```solidity
+function pause() external {
+       // operator or gov
+       require(msg.sender == _operator && msg.sender == _governance, 'unauthorized');
+
+       _paused = true;
+   }
+   
+```
+
+12. The comment is misleading
+
+```solidity
+       // operator or gov
+
+```
+
+
+### Unpause
+
+it is simple.
+
+### Change Governance 
+
+13. Damn , anyone can change the governance to their own address or to someone else's address.
+
+
+```solidity
+
+   function changeGovernance(address governance) external {
+       _governance = governance;
+   }
+
+```
+so any function that is ruled by governance like unpause , can be acccessed by anyone . so anyone can unpause the withdraws at anytime
+
+
+
+### Realized later 
+
+- The `_token` is choosen by the operator to be a trustworthy token do not allowing re-entrancy.
+
+
+
+
+
 ## Race #10
 This time, I came across an abstract Contract (in the sense that its functionality was not clear beforehand). <br/>
 I had to infer certain flow patterns and vulnerabilities that are not common in the space ( or new to me ).
