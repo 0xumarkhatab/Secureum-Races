@@ -3,6 +3,21 @@
 This repository will contain my results of different Secureum Races for the record
 <br/> and write-ups for newbies ( thinking if something is unclear for me, might be for others too)
 
+## Race #13
+
+![image](https://github.com/umaresso/Secureum-Races/assets/71306738/e742d7ae-09d9-4740-8719-5117ccab5e5e)
+
+### Write-up :
+
+Race #13 was absolutely Assemblish ....
+lost 3 marks due to it so had to learn assembly by an article and come back to understand my pitfalls.
+
+Thank God I understood my mistakes
+So that they can't re-enter in my mind in next contests.
+
+No write-up for this race : )
+
+
 ## Race #12
 
 Learned Cleared my concerns about Re-Entrancy in ERC20 and ERC721  the hard way ( lost 1 marks : / )
