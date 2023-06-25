@@ -3,6 +3,79 @@
 This repository will contain my results of different Secureum Races for the record
 <br/> and write-ups for newbies ( thinking if something is unclear for me, might be for others too)
 
+## Race #12
+Race #12
+
+Learned Cleared my concerns about Re-Entrancy in ERC20 and ERC721  the hard way ( lost 1 marks : / )
+
+But that's part of learning. <br/>
+
+In this Race, I've Researched, cleared confusion asked questions to other auditors. <br/>
+Waiting answers
+
+We are Getting better and Closer : )
+
+![Screenshot from 2023-06-25 12-17-22](https://github.com/umaresso/Secureum-Races/assets/71306738/d6d8c6b6-d802-4162-b7c7-3c07f647a2b0)
+
+
+### Write-up 
+
+
+Race Link : https://ventral.digital/posts/2022/12/6/race-12-of-the-secureum-bootcamp-epoch
+
+Code Review : 
+
+1. Solc 0.8.x , over/underflow is not possible unless it happens in unchecked
+
+2. wrong import as of now `import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
+`
+
+### Token V1 Fallback 
+
+3. fallback gives the entire power to msg.sender to execute anything with a condition that call result should be true.
+
+```solidity
+
+fallback() external {
+        if (hasRole(MIGRATOR_ROLE, msg.sender)) {
+            (bool success, bytes memory data) = msg.sender.delegatecall(msg.data);
+            require(success, "MIGRATION CALL FAILED");
+            assembly {
+                return(add(data, 32), mload(data))
+            }
+        }
+    }
+
+```
+
+## Vault
+
+### Constructor
+
+
+4. ` address public UNDERLYING` can be immutable because it's value is set in the constructor only
+ 
+5. sweep is really malicicious .
+	- external visibility ( can be called by anyone)
+	- anyone can pass the underlying token address , ( easy to get from block explorers for this contract Txs) and withdraw all the balance.
+	
+```solidity
+
+   function sweep(address token) external {
+        require(UNDERLYING != token, "can't sweep underlying");
+        IEERC20(token).transfer(msg.sender, IEERC20(token).balanceOf(address(this)));
+    }
+    
+```
+
+## Token V2
+
+### Fallback
+
+6. Always Wrong Fallback condition `(address(this) != TOKEN_V1)` the new deployed address can never be the one deployed earlier unless the user determined it's address and fed into the constructor as TokenV1 , if that's so , then the entire logic is flawed.
+
+
+
 ## Race # 11
 Scored 5.7 .
 Lost some marks to learn something new !
