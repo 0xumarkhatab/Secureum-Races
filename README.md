@@ -4,7 +4,6 @@ This repository will contain my results of different Secureum Races for the reco
 <br/> and write-ups for newbies ( thinking if something is unclear for me, might be for others too)
 
 ## Race #12
-Race #12
 
 Learned Cleared my concerns about Re-Entrancy in ERC20 and ERC721  the hard way ( lost 1 marks : / )
 
@@ -74,7 +73,13 @@ fallback() external {
 
 6. Always Wrong Fallback condition `(address(this) != TOKEN_V1)` the new deployed address can never be the one deployed earlier unless the user determined it's address and fed into the constructor as TokenV1 , if that's so , then the entire logic is flawed.
 
+### Realized Later
 
+1. `safeTransferFrom` re-entrancy happens in just NFTs.
+2. `safeTransferFrom` ERC20 implementation demands 4 parameters now ,
+   ```solidity
+   (address tokenAddress,address sender,address receiver,address reiceiver)
+   ```
 
 ## Race # 11
 Scored 5.7 .
