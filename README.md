@@ -2,6 +2,86 @@
 
 This repository will contain my results of different Secureum Races for the record
 <br/> and write-ups for newbies ( thinking if something is unclear for me, might be for others too)
+## Race #16
+Race #16 ( FlashLoans, my First Encounter)
+
+Scored 4/8.
+
+Scores are decreasing but knowledge is uplifting.
+
+Let's hope we'll get to it.
+
+![Screenshot from 2023-06-26 06-49-19](https://github.com/umaresso/Secureum-Races/assets/71306738/d2e59ead-ef34-47ae-9a8f-27bf37444438)
+
+
+### Write-ip
+
+Race Link:[Click here](https://ventral.digital/posts/2023/4/1/race-16-of-the-secureum-bootcamp-epoch-infinity)
+
+
+#### Compiler Version
+
+1. Solc 0.8.x ensures no over/under flow occurs unless something happens in unchecked.
+
+#### Imports 
+
+2. First time seeing this standard `IERC3156FlashLender`
+
+### flashFee
+
+3. The fee is static , what i would say is to have a dynamic percentage-like fee instead of simple uint value.
+
+#### flashLoan
+
+4. Things are working really fine unless we find this line 
+
+```soliidty
+
+ receiver.onFlashLoan(msg.sender, token, amount, fee, data)
+
+
+```
+This would probably allow re-entrancy and the hacker will make a big amount of approval to themselves. But the next lines mitigates the issue:
+
+
+```soiidity
+
+
+       if (IERC20(token).allowance(address(this), address(receiver)) > oldAllowance) {
+           IERC20(token).approve(address(receiver), oldAllowance);
+       }
+
+```
+
+This is great.
+
+
+### Realized Later
+
+5. ERC777 have sender-fallbacks that are dangerous for re-entrancy.
+
+## Race #15
+It was a good race when I tried to solve the it in under 16 minutes.
+
+Solved 7 questions in 16 minutes, and the last took 2 minutes more ...
+( On Mobile , with absence of electricity)
+
+Scored 5/8 .
+
+I know I can do better but these races are making me learn !
+![Race#15](https://github.com/umaresso/Secureum-Races/assets/71306738/5dd63329-6342-464c-8136-2f4808f1d148)
+
+
+## Race #14
+So , this one was pure DeFi ..
+A almost lost 60% of the questions.
+
+Opened google, researched, solved again ..
+
+Read the code solution again and then I was able to understand and score some 6/8 
+
+This 6/8 is irrelevant as it was my second attempt but the stuff learned was great!
+![Race#14](https://github.com/umaresso/Secureum-Races/assets/71306738/ccf1f67b-c317-4a98-9ac1-dc8e5da55f16)
 
 ## Race #13
 
