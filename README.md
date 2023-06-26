@@ -2,6 +2,25 @@
 
 This repository will contain my results of different Secureum Races for the record
 <br/> and write-ups for newbies ( thinking if something is unclear for me, might be for others too)
+
+## Race #17
+Here's how i've put my experience with the race in my tweet :
+
+"
+Race # 17
+
+This one was a beast ( designed by Sir @HickupH  )
+
+Introduced several things to me like event emission unpredictability, thinking outside of the box, deployed vs runtime costs, and much more.
+
+Although I secured just 2/8 I really treasure this one.
+
+Thank you Hickup
+
+"
+![image](https://github.com/umaresso/Secureum-Races/assets/71306738/0d8e5767-4ffd-460c-a3e2-aa2af4b08c55)
+
+
 ## Race #16
 Race #16 ( FlashLoans, my First Encounter)
 
