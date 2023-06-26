@@ -3,8 +3,89 @@
 This repository will contain my results of different Secureum Races for the record
 <br/> and write-ups for newbies ( thinking if something is unclear for me, might be for others too)
 
+## Race 18
+
+The Final Past Race - Race #18 
+
+Scored 3/8 on the first attempt and then went back, re-calibrated, and solved again.
+
+This race has taught me things like
+
+1. Generalized Questions
+2. try to quantify the losses
+3. variable shadowing
+4. wrong interface declaration
+
+Done with past, amazing learning
+
+Next Race - Live Race 19 Lesgo🚀🔥
+
+Write up is below!
+
+![image](https://github.com/umaresso/Secureum-Races/assets/71306738/99263761-9f42-4352-bd2b-cb6adfe4bef0)
+
+
+
+### Write-up
+
+Race Link : [Check here](https://ventral.digital/posts/2023/5/29/race-18-of-the-secureum-bootcamp-epoch-infinity)
+
+#### Comments
+comments are sometimes misleading, they are emphasizing that there are no Re-Entrancy bugs, does not mean there ain't ones.
+
+#### IERC20 interface
+1. The decimals function is non-standard
+
+```solidity
+
+function decimals() external view returns (uint256);
+
+```
+it should return uint8 instead.
+
+#### modifier
+2. The modifier is implemented incorrectly, it will allow the re-entrancy as `is_reenterant` variable will always be >=1
+
+#### withdraw
+
+3. Missing check on call result while sending funds
+
+```solidity
+_has_enough_balance(amount, balances[msg.sender]);
+        minted[msg.sender] = amount * decimals_factor;
+```
+
+
+### Depoist ( Realized later )
+4. It seems that anyone can deposit for anyone but seeing the `internal` visibility falsifies the assumption.
+
+```solidity
+  function deposit(uint amount) internal{
+        balances[msg.sender] += amount;
+    }
+
+```
+
+### _has_enough_balance
+5. Precision loss will result in miscalculations.
+
+
+```solidity
+
+  uint256 required_balance = (desired_tokens / 10) * decimals_factor;
+  
+```
+
+
+### Realized Later
+
+6. Understand the question fully, it is a generalized or more specific
+7. `No overflow can ever occur in a contract compiled with Solc version 0.8` should be stated with the exception of unchecked blocks.
+8. return variables shadowing can return zero.
+
+
 ## Race #17
-Here's how i've put my experience with the race in my tweet :
+Here's how I've put my experience with the race in my tweet :
 
 "
 Race # 17
